@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 let displayValue = "";
 let operator = "";
@@ -5,41 +6,45 @@ let firstOperand = "";
 let secondOperand = "";
 let isDarkTheme = false;
 
-function appendToDisplay(value) {
+window.appendToDisplay = function (value) {
     displayValue += value;
     updateDisplay();
-}
+};
 
-function appendOperator(op) {
+window.appendOperator = function (op) {
     if (firstOperand === "") {
         firstOperand = displayValue;
         operator = op;
         displayValue = "";
         updateDisplay();
     }
-}
+};
 
-function clearDisplay() {
+window.clearDisplay = function () {
     displayValue = "";
     firstOperand = "";
     secondOperand = "";
     operator = "";
     updateDisplay();
-}
+};
 
-function calculate() {
+window.calculate = function () {
     if (firstOperand !== "" && operator !== "" && displayValue !== "") {
         secondOperand = displayValue;
-        let result = performCalculation(firstOperand, secondOperand, operator);
+        const result = performCalculation(
+            firstOperand,
+            secondOperand,
+            operator,
+        );
         displayValue = result;
         firstOperand = "";
         secondOperand = "";
         operator = "";
         updateDisplay();
     }
-}
+};
 
-function performCalculation(a, b, op) {
+window.performCalculation = function (a, b, op) {
     a = parseFloat(a);
     b = parseFloat(b);
     let result = 0;
@@ -58,27 +63,27 @@ function performCalculation(a, b, op) {
             break;
     }
     return result.toString();
-}
+};
 
-function toggleSign() {
+window.toggleSign = function () {
     if (displayValue !== "" && displayValue !== "Ошибка") {
         displayValue = (parseFloat(displayValue) * -1).toString();
         updateDisplay();
     }
-}
+};
 
-function calculatePercentage() {
+window.calculatePercentage = function () {
     if (displayValue !== "" && displayValue !== "Ошибка") {
         displayValue = (parseFloat(displayValue) / 100).toString();
         updateDisplay();
     }
-}
+};
 
-function updateDisplay() {
+window.updateDisplay = function () {
     document.getElementById("display").value = displayValue;
-}
+};
 
-function toggleTheme() {
+window.toggleTheme = function () {
     isDarkTheme = !isDarkTheme;
     document.body.classList.toggle("dark-theme", isDarkTheme);
-}
+};
