@@ -1,0 +1,188 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Компактный калькулятор без фреймворков</title>
+        <style>
+            :root {
+                --bg-color: #f0f0f0;
+                --calc-bg: #ffffff;
+                --display-bg: #e0e0e0;
+                --display-color: #333333;
+                --btn-bg: #4caf50;
+                --btn-color: #ffffff;
+                --btn-hover: #45a049;
+                --operator-bg: #ff9800;
+                --operator-hover: #e68a00;
+                --equals-bg: #2196f3;
+                --equals-hover: #1e87db;
+                --clear-bg: #f44336;
+                --clear-hover: #da190b;
+                --special-bg: #9c27b0;
+                --special-hover: #7b1fa2;
+                --theme-icon: "🌞";
+            }
+
+            .dark-theme {
+                --bg-color: #1a1a1a;
+                --calc-bg: #2c3e50;
+                --display-bg: #34495e;
+                --display-color: #ecf0f1;
+                --btn-bg: #3498db;
+                --btn-color: #ecf0f1;
+                --btn-hover: #2980b9;
+                --operator-bg: #e74c3c;
+                --operator-hover: #c0392b;
+                --equals-bg: #2ecc71;
+                --equals-hover: #27ae60;
+                --clear-bg: #f39c12;
+                --clear-hover: #d35400;
+                --special-bg: #9b59b6;
+                --special-hover: #8e44ad;
+                --theme-icon: "🌙";
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: var(--bg-color);
+                transition: background-color 0.3s ease;
+            }
+
+            .calculator {
+                background-color: var(--calc-bg);
+                padding: 15px;
+                width: 280px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            #display {
+                width: 100%;
+                height: 60px;
+                font-size: 2em;
+                text-align: right;
+                margin-bottom: 15px;
+                padding: 10px;
+                background-color: var(--display-bg);
+                color: var(--display-color);
+                border: none;
+                border-radius: 5px;
+            }
+
+            .buttons {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            button {
+                width: 100%;
+                height: 50px;
+                font-size: 1.2em;
+                border: none;
+                border-radius: 5px;
+                background-color: var(--btn-bg);
+                color: var(--btn-color);
+                cursor: pointer;
+            }
+
+            button.operator {
+                background-color: var(--operator-bg);
+            }
+
+            button:hover {
+                background-color: var(--btn-hover);
+            }
+
+            button.operator:hover {
+                background-color: var(--operator-hover);
+            }
+
+            #equals {
+                background-color: var(--equals-bg);
+            }
+
+            #equals:hover {
+                background-color: var(--equals-hover);
+            }
+
+            #clear {
+                background-color: var(--clear-bg);
+            }
+
+            #clear:hover {
+                background-color: var(--clear-hover);
+            }
+
+            #toggleSign,
+            #percent {
+                background-color: var(--special-bg);
+            }
+
+            #toggleSign:hover,
+            #percent:hover {
+                background-color: var(--special-hover);
+            }
+
+            #toggleTheme {
+                background-color: var(--special-bg);
+                font-size: 1.5em;
+            }
+
+            #toggleTheme:hover {
+                background-color: var(--special-hover);
+            }
+
+            #toggleTheme::after {
+                content: var(--theme-icon);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="calculator">
+            <input type="text" id="display" readonly />
+            <div class="buttons">
+                <button id="clear" onclick="clearDisplay()">C</button>
+                <button id="toggleSign" onclick="toggleSign()">±</button>
+                <button id="percent" onclick="calculatePercentage()">%</button>
+                <button class="operator" onclick="appendOperator('/')">
+                    /
+                </button>
+                <button onclick="appendToDisplay('7')">7</button>
+                <button onclick="appendToDisplay('8')">8</button>
+                <button onclick="appendToDisplay('9')">9</button>
+                <button class="operator" onclick="appendOperator('*')">
+                    ×
+                </button>
+                <button onclick="appendToDisplay('4')">4</button>
+                <button onclick="appendToDisplay('5')">5</button>
+                <button onclick="appendToDisplay('6')">6</button>
+                <button class="operator" onclick="appendOperator('-')">
+                    -
+                </button>
+                <button onclick="appendToDisplay('1')">1</button>
+                <button onclick="appendToDisplay('2')">2</button>
+                <button onclick="appendToDisplay('3')">3</button>
+                <button class="operator" onclick="appendOperator('+')">
+                    +
+                </button>
+                <button id="toggleTheme" onclick="toggleTheme()"></button>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="appendToDisplay('.')">.</button>
+                <button id="equals" onclick="calculate()">=</button>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
