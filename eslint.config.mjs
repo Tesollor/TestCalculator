@@ -14,7 +14,6 @@ export default [
             "no-undef": "off",
             "no-console": "warn",
             "no-dupe-keys": "off",
-            "no-var": "error",
         },
     },
 ];

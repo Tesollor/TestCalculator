@@ -1,4 +1,4 @@
-var displayValue = "";
+let displayValue = "";
 let operator = "";
 let firstOperand = "";
 let secondOperand = "";
