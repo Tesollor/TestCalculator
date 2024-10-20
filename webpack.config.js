@@ -1,21 +1,18 @@
-/* eslint-disable no-undef */
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin"); // Импортируем плагин
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-    entry: "./script.js", // Ваш основной JS файл
+    mode: "production",
+    entry: "./src/script.js",
     output: {
-        path: path.resolve(__dirname, "dist"), // Куда будут сохраняться файлы
-        filename: "bundle.js", // Имя собранного файла JS
+        path: path.resolve(__dirname, "dist"),
+        filename: "bundle.js",
     },
     module: {
         rules: [
             {
-                test: /\.css$/, // Обработка CSS файлов
-                use: ["style-loader", "css-loader"],
-            },
-            {
-                test: /\.(js|jsx)$/, // Обработка JS и JSX файлов
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
@@ -28,8 +25,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./index.html", // Ваш исходный index.html файл
-            filename: "index.html", // Имя файла, который будет сгенерирован в dist
+            template: "./src/index.html",
+            filename: "index.html",
         }),
     ],
     devServer: {
@@ -37,5 +34,14 @@ module.exports = {
         compress: true,
         port: 9000,
     },
+
     mode: "development",
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                extractComments: false,
+            }),
+        ],
+    },
 };

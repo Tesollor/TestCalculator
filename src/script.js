@@ -1,23 +1,46 @@
-/* eslint-disable no-undef */
- 
-let displayValue = "";
+var displayValue = "";
 let operator = "";
 let firstOperand = "";
 let secondOperand = "";
 let isDarkTheme = false;
+let operatorClicked = false;
+let maxDisplayLength = 16;
 
 window.appendToDisplay = function (value) {
-    displayValue += value;
+    if (operatorClicked) {
+        displayValue = ""; // очищаем для второго операнда после ввода оператора
+        operatorClicked = false;
+    }
+
+    // если длина превышает максимум, удаляем старшие цифры
+    if (displayValue.length >= maxDisplayLength) {
+        displayValue = displayValue.slice(1);
+    }
+
+    displayValue += value; // добавляем новую цифру
     updateDisplay();
 };
 
 window.appendOperator = function (op) {
     if (firstOperand === "") {
-        firstOperand = displayValue;
-        operator = op;
-        displayValue = "";
+        firstOperand = displayValue; // сохраняем первый операнд
+    } else if (operator && !operatorClicked) {
+        // если оператор уже был введен, производим промежуточное вычисление
+        secondOperand = displayValue;
+        const result = performCalculation(
+            firstOperand,
+            secondOperand,
+            operator,
+        );
+        firstOperand = result; // результат становится первым операндом
+        displayValue = result; // отображаем результат
         updateDisplay();
     }
+
+    operator = op; // сохраняем оператор
+    operatorClicked = true; // отмечаем, что оператор был нажат
+    displayValue = `${firstOperand} ${operator}`; // отображаем первый операнд и оператор
+    updateDisplay();
 };
 
 window.clearDisplay = function () {
@@ -25,12 +48,13 @@ window.clearDisplay = function () {
     firstOperand = "";
     secondOperand = "";
     operator = "";
+    operatorClicked = false;
     updateDisplay();
 };
 
 window.calculate = function () {
     if (firstOperand !== "" && operator !== "" && displayValue !== "") {
-        secondOperand = displayValue;
+        secondOperand = displayValue; // сохраняем второй операнд
         const result = performCalculation(
             firstOperand,
             secondOperand,
@@ -40,6 +64,7 @@ window.calculate = function () {
         firstOperand = "";
         secondOperand = "";
         operator = "";
+        operatorClicked = false;
         updateDisplay();
     }
 };

@@ -1,3 +1,4 @@
 {
-    "livePreview.defaultPreviewPath": "/dist/index.html"
+    "livePreview.defaultPreviewPath": "/dist/index.html",
+    "editor.maxTokenizationLineLength": 10000
 }
